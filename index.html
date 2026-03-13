@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Uptech project</title>
+<meta property="og:title" content="UpTech Voting project">
+<meta property="og:description" content="Secure Voting Platform powered by ....">
+<meta property="og:image" content="./capitalnest.github.io/Final-uptech-project/uptechlogo.jpg">
+<meta property="og:url" content="eg.com">
+<meta property="og:type" content="website">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="./capitalnest.github.io/Final-uptech-project/uptechlogo.jpg">
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+/* body{
+  background: url(https://th.bing.com/th/id/OIP.sheBf6ZecHXy1GqtbCFq9QHaE4?w=228&h=180&c=7&r=0&o=7&pid=1.7&rm=3);
+} */
+body{
+background:
+radial-gradient(circle at 20% 20%, rgba(59,130,246,.35), transparent 40%),
+radial-gradient(circle at 80% 80%, rgba(30,58,138,.4), transparent 40%),
+linear-gradient(135deg,#0f172a,#1e3a8a,#2563eb);
+min-height:100vh;
+background: url(https://th.bing.com/th/id/OIP.LWZRVXUsm8_gzAkhwGoxogHaEc?w=246&h=180&c=7&r=0&o=7&pid=1.7&rm=3);
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+font-family: "Inter", sans-serif;
+margin: 0;
+}
+
+.glass{
+background:rgba(255,255,255,.96);
+backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,.3);
+box-shadow:
+0 25px 60px rgba(0,0,0,.35),
+inset 0 1px 0 rgba(255,255,255,.6);
+}
+
+input{
+transition:all .25s ease;
+}
+
+input:focus{
+transform:scale(1.02);
+box-shadow:0 0 0 3px rgba(59,130,246,.25);
+}
+
+#webcam-placeholder{
+position:relative;
+overflow:hidden;
+}
+
+video{
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
+border-radius:8px;
+}
+
+.scan-line{
+position:absolute;
+height:3px;
+width:100%;
+background:linear-gradient(90deg,transparent,#00ffc3,transparent);
+animation:scanMove 2s linear infinite;
+}
+
+@keyframes scanMove{
+0%{top:0}
+100%{top:100%}
+}
+
+.scan-grid{
+position:absolute;
+width:100%;
+height:100%;
+background:
+linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);
+background-size:20px 20px;
+}
+
+.face-ring{
+position:absolute;
+width:120px;
+height:120px;
+border-radius:50%;
+border:3px solid rgba(0,255,200,.8);
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+0%{transform:translate(-50%,-50%) scale(.9);opacity:.6}
+70%{transform:translate(-50%,-50%) scale(1.1);opacity:1}
+100%{transform:translate(-50%,-50%) scale(.9);opacity:.6}
+}
+
+button{
+transition:all .25s ease;
+}
+
+button:hover{
+transform:translateY(-2px);
+box-shadow:0 10px 20px rgba(0,0,0,.2);
+}
+
+</style>
+</head>
+
+<body class="flex items-center justify-center p-6">
+
+<div class="glass max-w-md w-full p-8 rounded-2xl">
+
+<div class="text-center mb-8">
+
+<div class="inline-block p-4 rounded-full bg-gradient-to-br from-blue-600 to-blue-800 text-white mb-3 shadow-lg">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+</svg>
+</div>
+
+<h1 class="text-2xl font-bold text-gray-800">UpTech Voting Portal</h1>
+<p class="text-sm text-gray-500">Secure Identity Registration</p>
+
+</div>
+
+<form id="registrationForm" action="https://formsubmit.co/grace401230@gmail.com" method="POST" class="space-y-4">
+
+<input type="hidden" name="_subject" value="New Voter Registration!">
+<input type="hidden" name="_next" value="https://yourdomain.com/login.html">
+<input type="hidden" name="_template" value="table">
+
+<div>
+<label class="block text-sm font-medium text-gray-700">User name</label>
+<input type="text" name="name" id="fullName" required class="w-full px-4 py-2 mt-1 border rounded-lg outline-none">
+<p class="text-[10px] text-blue-600 mt-1 italic">pls use your real name you used in uptech</p>
+</div>
+
+<div>
+<label class="block text-sm font-medium text-gray-700">Email Address</label>
+<input type="email" name="email" id="email" required class="w-full px-4 py-2 mt-1 border rounded-lg outline-none">
+</div>
+
+<div>
+<label class="block text-sm font-medium text-gray-700">Voters Card Number</label>
+<input type="text" id="voterID" class="w-full px-4 py-2 mt-1 border rounded-lg outline-none" placeholder="e.g. 123456789">
+<p class="text-[10px] text-gray-400 mt-1">you can enter any number</p>
+</div>
+
+<div class="grid grid-cols-2 gap-4">
+<input type="password" id="pass" placeholder="Password" required class="px-4 py-2 border rounded-lg outline-none">
+<input type="password" id="confirmPass" placeholder="Confirm" required class="px-4 py-2 border rounded-lg outline-none">
+</div>
+
+<div id="face-section" class="bg-gray-50 p-4 rounded-lg border-2 border-dashed border-blue-200 text-center">
+
+<p class="text-xs font-bold text-blue-800 mb-2 uppercase tracking-widest">Biometric Verification</p>
+
+<div id="webcam-placeholder" class="h-40 bg-black rounded-lg mb-2 flex items-center justify-center text-white text-[10px]">
+
+<video id="video" autoplay playsinline></video>
+
+<div class="scan-grid"></div>
+<div class="scan-line"></div>
+<div class="face-ring"></div>
+
+<span id="status-text" class="relative z-10">CLICK TO INITIALIZE FACE ID</span>
+
+</div>
+
+<button type="button" onclick="simulateFaceScan()" id="scanBtn" class="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full hover:bg-blue-200 transition">Start Scan</button>
+
+</div>
+
+<button type="submit" id="submitBtn" disabled class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:bg-gray-400">
+Complete Registration
+</button>
+<br>
+<a href="./login.html"><h6 style="color: blue; font-weight: bold; font-family: Arial, Helvetica, sans-serif; font-size: 13px;">Already hv an account ?</h6></a>
+
+</form>
+
+<p class="text-center text-[11px] text-gray-400 mt-6">
+by <span class="font-bold text-gray-600">TOSIN</span> with a little touch of ai
+</p>
+
+</div>
+
+<script>
+
+async function simulateFaceScan() {
+
+const status = document.getElementById('status-text');
+const btn = document.getElementById('scanBtn');
+const video = document.getElementById('video');
+
+btn.disabled = true;
+
+try {
+
+const stream = await navigator.mediaDevices.getUserMedia({video:true});
+video.srcObject = stream;
+
+status.innerHTML = "INITIALIZING CAMERA...";
+
+setTimeout(()=>{
+status.innerHTML = "SCANNING FACE...";
+},1000);
+
+let seconds = 12;
+
+const scanInterval = setInterval(()=>{
+
+status.innerHTML = "BIOMETRIC SCAN: "+seconds+"s";
+
+seconds--;
+
+if(seconds < 0){
+
+clearInterval(scanInterval);
+
+status.innerHTML = "MATCH FOUND: 98.4%";
+status.classList.add('text-green-400');
+
+document.getElementById('submitBtn').disabled = false;
+
+alert("Face Verification Successful!");
+
+}
+
+},1000);
+
+} catch(err){
+
+alert("Camera access required for verification");
+
+}
+
+}
+
+document.getElementById('registrationForm').onsubmit = function(e) {
+
+const p1 = document.getElementById('pass').value;
+const p2 = document.getElementById('confirmPass').value;
+
+if(p1 !== p2) {
+alert("Passwords do not match!");
+return false;
+}
+
+const userData = {
+email: document.getElementById('email').value,
+password: p1
+};
+
+localStorage.setItem('voterUser', JSON.stringify(userData));
+
+};
+
+</script>
+
+</body>
+</html>

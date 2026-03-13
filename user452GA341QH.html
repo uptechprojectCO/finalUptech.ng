@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechWars — Samsung vs iPhone</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #05070a;
+            --card: #0f1117;
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #ffffff;
+            --muted: #8b949e;
+            --accent-samsung: #3b82f6;
+            --accent-iphone: #f5f5f7;
+            --glass: rgba(255, 255, 255, 0.03);
+            --grad-iphone: linear-gradient(135deg, #434343 0%, #000000 100%);
+            --grad-samsung: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        }
+
+        .light {
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --border: #e5e7eb;
+            --text: #111827;
+            --muted: #6b7280;
+            --glass: rgba(0, 0, 0, 0.02);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            transition: 0.3s;
+            overflow-x: hidden;
+        }
+
+        /* Header Enhancement */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 5%;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-area h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: #ef4444;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px #ef4444;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Hero Stats Section */
+        .stats-hero {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .vs-bar-container {
+            width: 100%;
+            max-width: 800px;
+            height: 12px;
+            background: var(--glass);
+            margin: 20px auto;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            display: flex;
+        }
+
+        #iphoneProgress { background: var(--accent-iphone); width: 65%; transition: 1s ease; }
+        #samsungProgress { background: var(--accent-samsung); width: 35%; transition: 1s ease; }
+
+        /* Main Grid */
+        .wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            padding: 20px 5% 120px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+        }
+
+        .card:hover { transform: translateY(-10px); border-color: var(--muted); }
+
+        .brand-logo {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .iphone-card .brand-logo { color: #f5f5f7; text-shadow: 0 0 20px rgba(255,255,255,0.2); }
+        .samsung-card .brand-logo { color: #3b82f6; }
+
+        .card h3 { font-size: 2rem; font-weight: 800; margin-bottom: 5px; }
+        .card p { color: var(--muted); margin-bottom: 25px; font-size: 0.9rem; }
+
+        .vote-count {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .btn-vote {
+            width: 100%;
+            padding: 18px;
+            border-radius: 16px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .iphone-btn { background: #ffffff; color: #000; }
+        .samsung-btn { background: var(--accent-samsung); color: #fff; }
+
+        .btn-vote:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(1); }
+
+        /* Bottom Nav */
+        footer {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            background: rgba(15, 17, 23, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px;
+            z-index: 2000;
+        }
+
+        .nav-item {
+            color: var(--muted);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            gap: 4px;
+        }
+
+        .nav-item.active { color: var(--accent-samsung); }
+        .nav-item i { font-size: 1.2rem; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @media(max-width: 600px) {
+            header h1 { font-size: 1.2rem; }
+            .card { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-area">
+        <h1><span class="live-indicator"></span> TECHWARS</h1>
+    </div>
+    <div style="display:flex; gap:15px; align-items:center;">
+        <div id="notif" style="cursor:pointer; position:relative;">
+            <i class="fa fa-bell"></i>
+            <span id="notifCount" style="position:absolute; top:-5px; right:-5px; background:#ef4444; font-size:10px; padding:2px 5px; border-radius:10px;">0</span>
+        </div>
+        <button id="modeBtn" style="background:var(--glass); border:1px solid var(--border); color:inherit; width:35px; height:35px; border-radius:10px; cursor:pointer;">
+            <i class="fa fa-moon"></i>
+        </button>
+    </div>
+</header>
+
+<section class="stats-hero">
+    <h2 style="font-size: 2.5rem; font-weight: 800;">Who's winning?</h2>
+    <p style="color:var(--muted)">Live global voting metrics</p>
+    <div class="vs-bar-container">
+        <div id="iphoneProgress"></div>
+        <div id="samsungProgress"></div>
+    </div>
+    <div style="display:flex; justify-content: space-between; max-width: 800px; margin: 0 auto; font-weight:700; font-size:0.8rem;">
+        <span>IPHONE</span>
+        <span>SAMSUNG</span>
+    </div>
+</section>
+
+<div class="wrapper">
+    <div class="card iphone-card">
+        <div class="brand-logo"><i class="fab fa-apple"></i></div>
+        <h3>iPhone</h3>
+        <p>Titanium. Power. Ecosystem.</p>
+        <div class="vote-count" id="iphoneVotes">0</div>
+        <button class="btn-vote iphone-btn" id="voteIphone">
+            <i class="fa fa-bolt"></i> Vote for Apple
+        </button>
+        <div id="iphoneStatus" style="margin-top:15px; font-size:0.8rem; font-weight:600;"></div>
+    </div>
+
+    <div class="card samsung-card">
+        <div class="brand-logo"><i class="fa fa-mobile-screen-button"></i></div>
+        <h3>Samsung</h3>
+        <p>Innovation. Display. Freedom.</p>
+        <div class="vote-count" id="samsungVotes">0</div>
+        <button class="btn-vote samsung-btn" id="voteSamsung">
+            <i class="fa fa-fire"></i> Vote for Samsung
+        </button>
+        <div id="samsungStatus" style="margin-top:15px; font-size:0.8rem; font-weight:600;"></div>
+    </div>
+</div>
+
+<!-- <footer>
+    <a href="#" class="nav-item active"><i class="fa fa-house"></i>Home</a>
+    <a href="#" class="nav-item"><i class="fa fa-chart-line"></i>Trends</a>
+    <a href="#" class="nav-item"><i class="fa fa-trophy"></i>Winners</a>
+    <a href="#" class="nav-item"><i class="fa fa-user-circle"></i>Profile</a>
+</footer> -->
+
+<script>
+    // THEME
+    const btn = document.getElementById("modeBtn");
+    btn.onclick = () => {
+        document.body.classList.toggle("light");
+        btn.innerHTML = document.body.classList.contains("light") ? '<i class="fa fa-sun"></i>' : '<i class="fa fa-moon"></i>';
+    };
+
+    // DATA INITIALIZATION (iPhone highest by default)
+    let iphoneVotes = parseInt(localStorage.getItem("iphoneVotes")) || 12540300;
+    let samsungVotes = parseInt(localStorage.getItem("samsungVotes")) || 8420150;
+    let userVoted = localStorage.getItem("userTechVote") || null;
+
+    const ipEl = document.getElementById("iphoneVotes");
+    const saEl = document.getElementById("samsungVotes");
+    const ipBar = document.getElementById("iphoneProgress");
+    const saBar = document.getElementById("samsungProgress");
+
+    function updateUI() {
+        ipEl.textContent = iphoneVotes.toLocaleString();
+        saEl.textContent = samsungVotes.toLocaleString();
+
+        let total = iphoneVotes + samsungVotes;
+        let ipPercent = (iphoneVotes / total) * 100;
+        let saPercent = (samsungVotes / total) * 100;
+
+        ipBar.style.width = ipPercent + "%";
+        saBar.style.width = saPercent + "%";
+
+        if(userVoted === 'iphone') {
+            document.getElementById("voteIphone").disabled = true;
+            document.getElementById("iphoneStatus").innerHTML = "Voted ✅";
+        } else if(userVoted === 'samsung') {
+            document.getElementById("voteSamsung").disabled = true;
+            document.getElementById("samsungStatus").innerHTML = "Voted ✅";
+        }
+    }
+
+    document.getElementById("voteIphone").onclick = () => {
+        if(!userVoted) {
+            iphoneVotes++;
+            userVoted = 'iphone';
+            localStorage.setItem("userTechVote", "iphone");
+            saveAndRef();
+        }
+    };
+
+    document.getElementById("voteSamsung").onclick = () => {
+        if(!userVoted) {
+            samsungVotes++;
+            userVoted = 'samsung';
+            localStorage.setItem("userTechVote", "samsung");
+            saveAndRef();
+        }
+    };
+
+    function saveAndRef() {
+        localStorage.setItem("iphoneVotes", iphoneVotes);
+        localStorage.setItem("samsungVotes", samsungVotes);
+        updateUI();
+    }
+
+    // Live background "simulation"
+    setInterval(() => {
+        iphoneVotes += Math.floor(Math.random() * 8) + 5; // iPhone grows faster
+        samsungVotes += Math.floor(Math.random() * 6);
+        saveAndRef();
+    }, 2500);
+
+    updateUI();
+
+    // Notification Logic
+    let count = 0;
+    setInterval(() => {
+        count++;
+        document.getElementById("notifCount").textContent = count;
+    }, 300000);
+</script>
+</body>
+</html>
